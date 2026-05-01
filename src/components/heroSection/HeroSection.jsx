@@ -5,9 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowRight, Flame, Sparkles, Sun, Wind } from "lucide-react";
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1400&q=80";
-
 const SLIDES = [
   {
     eyebrow: "Summer Sale",
@@ -16,14 +13,18 @@ const SLIDES = [
     cta: { href: "/products", label: "Shop the sale" },
     badge: { icon: Flame, text: "Hot Deals" },
     bg: "from-sun-300 via-sun-400 to-sun-600",
+    image:
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1400&q=80",
   },
   {
     eyebrow: "New Arrivals",
     title: "Linen, Straw & Salt",
-    subtitle: "the easiest summer wardrobe, built in 6 pieces",
+    subtitle: "the easiest summer wardrobe",
     cta: { href: "/products", label: "Explore collection" },
     badge: { icon: Sparkles, text: "Just Dropped" },
     bg: "from-ocean-300 via-ocean-400 to-ocean-600",
+    image:
+      "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1400&q=80",
   },
   {
     eyebrow: "Reef-safe SPF",
@@ -32,6 +33,8 @@ const SLIDES = [
     cta: { href: "/products", label: "Discover skincare" },
     badge: { icon: Wind, text: "Skin Loved" },
     bg: "from-sun-200 via-sun-300 to-ocean-300",
+    image:
+      "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=1400&q=80",
   },
 ];
 
@@ -104,8 +107,9 @@ export default function HeroSection() {
             style={{ animation: "float 8s ease-in-out infinite" }}
           >
             <Image
-              src={HERO_IMAGE}
-              alt="SunCart summer sale featured model"
+              key={slide.image}
+              src={slide.image}
+              alt={`${slide.title} featured image`}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="h-full w-full object-cover opacity-90 mix-blend-multiply"
