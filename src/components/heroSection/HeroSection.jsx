@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowRight, Flame, Sparkles, Sun, Wind } from "lucide-react";
+import MarqueeHero from "./MarqueeHero";
 
 const SLIDES = [
   {
@@ -135,22 +136,7 @@ export default function HeroSection() {
       <div className="border-y border-sun-200/70 bg-white/60 backdrop-blur">
         <div className="overflow-hidden">
           <div className="marquee-track flex gap-12 whitespace-nowrap py-4 font-display text-2xl text-sun-700">
-            {Array.from({ length: 2 }).map((_, groupIndex) => (
-              <div key={groupIndex} className="flex shrink-0 gap-12 pr-12">
-                {[
-                  "Summer Sale 50% off",
-                  "Free shipping over $40",
-                  "New: Linen drop",
-                  "Reef-safe SPF",
-                  "Skincare bundles",
-                  "Polarized UV400",
-                ].map((text) => (
-                  <span key={text} className="opacity-80">
-                    {text}
-                  </span>
-                ))}
-              </div>
-            ))}
+            <MarqueeHero />
           </div>
         </div>
       </div>
