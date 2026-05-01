@@ -48,7 +48,8 @@
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold text-white
       bg-gradient-to-r from-sun-500 via-sun-400 to-sun-300
       shadow-[0_10px_30px_-8px_rgba(242,107,31,0.6)]
-      hover:brightness-105 active:scale-[0.98] transition-all;
+      hover:brightness-105 hover:shadow-[0_14px_36px_-8px_rgba(242,107,31,0.7)]
+      active:scale-[0.98] transition-all;
   }
 
   .btn-ghost-sun {
@@ -59,7 +60,16 @@
 
   .card-sun {
     @apply rounded-3xl bg-white/80 backdrop-blur border border-white
-      shadow-[0_10px_40px_-15px_rgba(20,20,40,0.25)] transition-all;
+      shadow-[0_10px_40px_-15px_rgba(20,20,40,0.25)]
+      hover:shadow-[0_20px_60px_-15px_rgba(242,107,31,0.35)] transition-all;
+  }
+
+  .section-title {
+    @apply font-display text-3xl text-sun-900 sm:text-4xl lg:text-5xl;
+  }
+
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.25em] text-sun-600;
   }
 }
 
