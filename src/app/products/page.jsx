@@ -1,19 +1,43 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import products from "@/data/products.json";
-import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
+import { Check, ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 
 const CATEGORIES = [
   "All",
   ...new Set(products.map((product) => product.category)),
 ];
 
+const SORT_OPTIONS = [
+  { value: "featured", label: "Featured" },
+  { value: "rating", label: "Top Rated" },
+  { value: "price-asc", label: "Price: Low to High" },
+  { value: "price-desc", label: "Price: High to Low" },
+];
+
 export default function ProductsPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("featured");
+  const [sortOpen, setSortOpen] = useState(false);
+  const sortMenuRef = useRef(null);
+  const selectedSort = SORT_OPTIONS.find((option) => option.value === sort);
+
+  useEffect(() => {
+    const closeSortMenu = (event) => {
+      if (!sortMenuRef.current?.contains(event.target)) {
+        setSortOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", closeSortMenu);
+
+    return () => {
+      document.removeEventListener("pointerdown", closeSortMenu);
+    };
+  }, []);
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -89,23 +113,62 @@ export default function ProductsPage() {
           ))}
         </div>
 
-        <label className="relative flex self-start items-center gap-2 rounded-full border border-sun-200/80 bg-white px-3 py-2.5 pr-9 shadow-sm transition focus-within:border-sun-400 focus-within:ring-4 focus-within:ring-sun-200/45 lg:self-auto">
-          <SlidersHorizontal className="h-4 w-4 shrink-0 text-sun-500" />
-          <span className="sr-only">Sort products</span>
-
-          <select
-            value={sort}
-            onChange={(event) => setSort(event.target.value)}
-            className="appearance-none border-0 bg-transparent p-0 text-sm font-semibold text-sun-800 outline-none focus:ring-0"
+        <div
+          ref={sortMenuRef}
+          className="relative self-start lg:self-auto"
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              setSortOpen(false);
+            }
+          }}
+        >
+          <button
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded={sortOpen}
+            onClick={() => setSortOpen((open) => !open)}
+            className="flex min-w-44 items-center gap-2 rounded-full border border-sun-200/80 bg-white px-3 py-2.5 text-sm font-semibold text-sun-800 shadow-sm transition hover:border-sun-300 focus:border-sun-400 focus:outline-none focus:ring-4 focus:ring-sun-200/45"
           >
-            <option value="featured">Featured</option>
-            <option value="rating">Top Rated</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-          </select>
+            <SlidersHorizontal className="h-4 w-4 shrink-0 text-sun-500" />
+            <span className="flex-1 text-left">{selectedSort.label}</span>
+            <ChevronDown
+              className={`h-4 w-4 shrink-0 text-sun-500 transition-transform ${
+                sortOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
 
-          <ChevronDown className="pointer-events-none absolute right-3 h-4 w-4 text-sun-500" />
-        </label>
+          {sortOpen ? (
+            <div
+              role="listbox"
+              aria-label="Sort products"
+              className="absolute right-0 z-30 mt-2 w-56 overflow-hidden rounded-2xl border border-sun-100 bg-white p-1.5 shadow-[0_18px_45px_-18px_rgba(74,26,8,0.45)]"
+            >
+              {SORT_OPTIONS.map((option) => (
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={sort === option.value}
+                  key={option.value}
+                  onClick={() => {
+                    setSort(option.value);
+                    setSortOpen(false);
+                  }}
+                  className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-semibold transition ${
+                    sort === option.value
+                      ? "bg-sun-500 text-white"
+                      : "text-sun-800 hover:bg-sun-100/60"
+                  }`}
+                >
+                  <span className="flex-1">{option.label}</span>
+                  {sort === option.value ? (
+                    <Check className="h-4 w-4 shrink-0" />
+                  ) : null}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
       </div>
 
       {filtered.length === 0 ? (
