@@ -2,34 +2,11 @@ import {
   ArrowLeft,
   Compass,
   Home,
-  Search,
-  ShoppingBag,
   Sparkles,
   Sun,
   Waves,
 } from "lucide-react";
 import Link from "next/link";
-
-const quickLinks = [
-  {
-    href: "/products",
-    icon: ShoppingBag,
-    title: "Shop Summer Picks",
-    text: "Find sunglasses, linen, SPF, and beach-ready essentials.",
-  },
-  {
-    href: "/my-profile",
-    icon: Compass,
-    title: "My Profile",
-    text: "Check your saved details and sunny account space.",
-  },
-  {
-    href: "/",
-    icon: Search,
-    title: "Back to Home",
-    text: "Return to the main SunCart collection page.",
-  },
-];
 
 export default function NotFoundPage() {
   return (
@@ -95,24 +72,6 @@ export default function NotFoundPage() {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="mx-auto mt-8 grid max-w-5xl gap-4 md:grid-cols-3">
-          {quickLinks.map(({ href, icon: Icon, title, text }) => (
-            <Link
-              key={title}
-              href={href}
-              className="card-sun group block p-5 hover:-translate-y-1 hover:border-sun-200"
-            >
-              <span className="grid h-11 w-11 place-items-center rounded-2xl bg-sun-100 text-sun-700 transition group-hover:bg-sun-500 group-hover:text-white">
-                <Icon className="h-5 w-5" />
-              </span>
-              <h2 className="mt-4 font-display text-xl text-sun-900">
-                {title}
-              </h2>
-              <p className="mt-2 text-sm leading-6 text-neutral/60">{text}</p>
-            </Link>
-          ))}
         </div>
       </section>
     </main>
