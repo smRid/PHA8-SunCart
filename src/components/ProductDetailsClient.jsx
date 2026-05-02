@@ -244,7 +244,7 @@ export default function ProductDetailsClient({ product, discount }) {
                 saved ? "fill-sun-500 stroke-sun-600" : ""
               }`}
             />
-            {saved ? "Saved" : "Save"}
+            {saved ? "Wishlisted" : "Wishlist"}
           </button>
         </div>
       </div>

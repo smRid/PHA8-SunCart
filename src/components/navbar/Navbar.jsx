@@ -1,12 +1,13 @@
 "use client";
 
-import { LogOut, Menu, ShoppingBag, Sun, X } from "lucide-react";
+import { Heart, LogOut, Menu, ShoppingBag, ShoppingCart, Sun, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { signOut, useSession } from "@/lib/auth-client";
+import { useShop } from "@/context/ShopContext";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -20,6 +21,8 @@ export default function Navbar() {
   const { data: session, isPending } = useSession();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { cartCount, wishlist } = useShop();
+  const wishCount = wishlist.length;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -88,6 +91,24 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-2 md:flex">
+          <IconLink
+            href="/wishlist"
+            label="Wishlist"
+            count={wishCount}
+            active={pathname.startsWith("/wishlist")}
+          >
+            <Heart className="w-5 h-5" />
+          </IconLink>
+
+          <IconLink
+            href="/cart"
+            label="Cart"
+            count={cartCount}
+            active={pathname.startsWith("/cart")}
+          >
+            <ShoppingCart className="w-5 h-5" />
+          </IconLink>
+
           {isPending ? (
             <div className="h-10 w-24 animate-pulse rounded-full bg-white/60" />
           ) : session?.user ? (
@@ -165,6 +186,34 @@ export default function Navbar() {
             </Link>
           ))}
 
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              href="/wishlist"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/80 border border-sun-100 font-semibold text-sun-800"
+            >
+              <Heart className="w-4 h-4" /> Wishlist
+              {wishCount > 0 ? (
+                <span className="ml-1 inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-sun-500 text-white text-[10px] font-bold">
+                  {wishCount}
+                </span>
+              ) : null}
+            </Link>
+
+            <Link
+              href="/cart"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/80 border border-sun-100 font-semibold text-sun-800"
+            >
+              <ShoppingCart className="w-4 h-4" /> Cart
+              {cartCount > 0 ? (
+                <span className="ml-1 inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-sun-500 text-white text-[10px] font-bold">
+                  {cartCount}
+                </span>
+              ) : null}
+            </Link>
+          </div>
+
           {session?.user ? (
             <button
               type="button"
@@ -194,5 +243,27 @@ export default function Navbar() {
         </div>
       </div>
     </header>
+  );
+}
+
+function IconLink({ href, label, count, active, children }) {
+  return (
+    <Link
+      href={href}
+      aria-label={label}
+      className={`relative w-10 h-10 rounded-full grid place-items-center border transition ${
+        active
+          ? "bg-sun-100 border-sun-300 text-sun-800"
+          : "bg-white/70 border-sun-100 text-sun-700 hover:bg-white hover:border-sun-300"
+      }`}
+    >
+      {children}
+
+      {count > 0 ? (
+        <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-sun-500 text-white text-[10px] font-bold grid place-items-center shadow">
+          {count}
+        </span>
+      ) : null}
+    </Link>
   );
 }

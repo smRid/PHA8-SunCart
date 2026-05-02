@@ -110,5 +110,61 @@
     "category": "Skincare",
     "tags": ["alcohol-free", "vegan"],
     "highlight": "Alcohol-free"
+  },
+  {
+    "id": 9,
+    "name": "Tide Rider Board Shorts",
+    "brand": "ReefRunner",
+    "price": 42,
+    "originalPrice": 65,
+    "rating": 4.5,
+    "stock": 14,
+    "description": "Stretch recycled-polyester board shorts with a built-in mesh liner, zip pocket and quick-dry fabric. From morning surf to beachside tacos without a change.",
+    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
+    "category": "Apparel",
+    "tags": ["recycled", "quick-dry", "men"],
+    "highlight": "Recycled fabric"
+  },
+  {
+    "id": 10,
+    "name": "Aloe Glacier After-Sun Gel",
+    "brand": "Solara",
+    "price": 18,
+    "originalPrice": 25,
+    "rating": 4.8,
+    "stock": 35,
+    "description": "Cooling after-sun gel with 97% organic aloe vera, cucumber extract and vitamin E. Soothes sunburn, restores moisture and calms redness on contact.",
+    "image": "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=80",
+    "category": "Skincare",
+    "tags": ["aloe-vera", "organic", "vegan"],
+    "highlight": "97% Organic"
+  },
+  {
+    "id": 11,
+    "name": "Golden Hour Clip-On Lenses",
+    "brand": "SunShade",
+    "price": 26,
+    "originalPrice": 40,
+    "rating": 4.4,
+    "stock": 20,
+    "description": "Amber-tinted polarized clip-on lenses that fit most prescription frames. Flip-up hinge, anti-glare coating and a warm golden tone that makes every sunset glow.",
+    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80",
+    "category": "Accessories",
+    "tags": ["polarized", "clip-on", "unisex"],
+    "highlight": "Clip-on design"
+  },
+  {
+    "id": 12,
+    "name": "Bali Rattan Beach Bag",
+    "brand": "DuneCo",
+    "price": 35,
+    "originalPrice": 55,
+    "rating": 4.7,
+    "stock": 10,
+    "description": "Hand-woven rattan crossbody bag with a cotton lining and magnetic snap. Fits your phone, sunscreen and a good book — all the beach-day essentials.",
+    "image": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=900&q=80",
+    "category": "Accessories",
+    "tags": ["handmade", "rattan", "women"],
+    "highlight": "Handwoven"
   }
 ]

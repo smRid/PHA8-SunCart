@@ -94,9 +94,46 @@ export function ShopProvider({ children }) {
             ? { ...item, quantity: item.quantity + quantity }
             : item,
         )
-      : [...items, { ...product, quantity }];
+      : [
+          ...items,
+          {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            originalPrice: product.originalPrice,
+            image: product.image,
+            brand: product.brand,
+            quantity,
+          },
+        ];
 
     setStoredJson(CART_KEY, nextItems);
+  }, []);
+
+  const removeFromCart = useCallback((id) => {
+    const items = getStoredJson(CART_KEY);
+    setStoredJson(
+      CART_KEY,
+      items.filter((item) => item.id !== id),
+    );
+  }, []);
+
+  const updateQty = useCallback((id, quantity) => {
+    const items = getStoredJson(CART_KEY);
+    setStoredJson(
+      CART_KEY,
+      items
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: Math.max(1, quantity) }
+            : item,
+        )
+        .filter((item) => item.quantity > 0),
+    );
+  }, []);
+
+  const clearCart = useCallback(() => {
+    setStoredJson(CART_KEY, []);
   }, []);
 
   const isWishlisted = useCallback(
@@ -108,20 +145,66 @@ export function ShopProvider({ children }) {
     const items = getStoredJson(WISHLIST_KEY);
     const nextItems = items.some((item) => item.id === product.id)
       ? items.filter((item) => item.id !== product.id)
-      : [...items, product];
+      : [
+          ...items,
+          {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            originalPrice: product.originalPrice,
+            image: product.image,
+            brand: product.brand,
+          },
+        ];
 
     setStoredJson(WISHLIST_KEY, nextItems);
   }, []);
+
+  const removeFromWishlist = useCallback((id) => {
+    const items = getStoredJson(WISHLIST_KEY);
+    setStoredJson(
+      WISHLIST_KEY,
+      items.filter((item) => item.id !== id),
+    );
+  }, []);
+
+  const cartCount = useMemo(
+    () => cart.reduce((sum, item) => sum + item.quantity, 0),
+    [cart],
+  );
+
+  const cartSubtotal = useMemo(
+    () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [cart],
+  );
 
   const value = useMemo(
     () => ({
       cart,
       wishlist,
+      cartCount,
+      cartSubtotal,
       addToCart,
+      removeFromCart,
+      updateQty,
+      clearCart,
       isWishlisted,
       toggleWishlist,
+      removeFromWishlist,
     }),
-    [addToCart, cart, isWishlisted, toggleWishlist, wishlist],
+    [
+      addToCart,
+      cart,
+      cartCount,
+      cartSubtotal,
+      clearCart,
+      isWishlisted,
+      removeFromCart,
+      removeFromWishlist,
+      toggleWishlist,
+      updateQty,
+      wishlist,
+    ],
   );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
