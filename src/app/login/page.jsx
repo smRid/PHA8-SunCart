@@ -86,14 +86,10 @@ function LoginInner() {
 
   const onGoogle = async () => {
     try {
-      const origin = window.location.origin;
-
       await signIn.social({
         provider: "google",
-        callbackURL: new URL(HOME_PATH, origin).toString(),
-        errorCallbackURL: `${origin}/login`,
-        newUserCallbackURL: new URL(HOME_PATH, origin).toString(),
-        requestSignUp: true,
+        callbackURL: HOME_PATH,
+        errorCallbackURL: "/login",
       });
     } catch (error) {
       const message = error.message || "Google sign-in failed.";
