@@ -2,6 +2,7 @@
 @import "daisyui/daisyui.css";
 
 @theme {
+  --color-sun-50: #fff8e8;
   --color-sun-100: #ffefc2;
   --color-sun-200: #ffe08a;
   --color-sun-300: #ffc857;
@@ -54,8 +55,7 @@
 
   .btn-ghost-sun {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold
-      text-sun-700 bg-white/70 border border-sun-200
-      hover:bg-white hover:border-sun-300 transition-all;
+      border border-sun-200 text-sun-700 bg-white/80 hover:bg-sun-50 transition-all;
   }
 
   .card-sun {

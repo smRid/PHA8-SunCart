@@ -5,6 +5,7 @@ const config = {
     extend: {
       colors: {
         sun: {
+          50: "#FFF8E8",
           100: "#FFEFC2",
           200: "#FFE08A",
           300: "#FFC857",

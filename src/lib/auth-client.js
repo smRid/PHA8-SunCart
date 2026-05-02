@@ -5,6 +5,7 @@ import { useSyncExternalStore } from "react";
 const SESSION_KEY = "suncart.session";
 const USERS_KEY = "suncart.users";
 const AUTH_EVENT = "suncart-auth-change";
+const SESSION_COOKIE = "suncart.session";
 let cachedSessionRaw;
 let cachedSession;
 
@@ -27,6 +28,13 @@ const setStoredJson = (key, value) => {
   }
 
   window.localStorage.setItem(key, JSON.stringify(value));
+
+  if (key === SESSION_KEY) {
+    document.cookie = `${SESSION_COOKIE}=${encodeURIComponent(
+      JSON.stringify(value),
+    )}; Path=/; Max-Age=2592000; SameSite=Lax`;
+  }
+
   window.dispatchEvent(new Event(AUTH_EVENT));
 };
 
@@ -36,6 +44,11 @@ const clearStoredJson = (key) => {
   }
 
   window.localStorage.removeItem(key);
+
+  if (key === SESSION_KEY) {
+    document.cookie = `${SESSION_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`;
+  }
+
   window.dispatchEvent(new Event(AUTH_EVENT));
 };
 
@@ -98,6 +111,8 @@ export const signIn = {
         name: user.name,
         email: user.email,
         image: user.image,
+        emailVerified: user.emailVerified ?? true,
+        createdAt: user.createdAt || new Date().toISOString(),
       },
     };
 
@@ -112,6 +127,8 @@ export const signIn = {
         name: "Sunny Shopper",
         email: "sunny@suncart.shop",
         image: "",
+        emailVerified: true,
+        createdAt: new Date().toISOString(),
       },
     };
 
@@ -143,6 +160,8 @@ export const signUp = {
       name,
       email,
       image: image || "",
+      emailVerified: true,
+      createdAt: new Date().toISOString(),
       password,
     };
 

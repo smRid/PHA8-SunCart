@@ -20,7 +20,7 @@ const SLIDES = [
   {
     eyebrow: "New Arrivals",
     title: "Linen, Straw & Salt",
-    subtitle: "the easiest summer wardrobe",
+    subtitle: "your easiest summer wardrobe",
     cta: { href: "/products", label: "Explore collection" },
     badge: { icon: Sparkles, text: "Just Dropped" },
     bg: "from-ocean-300 via-ocean-400 to-ocean-600",
@@ -30,7 +30,7 @@ const SLIDES = [
   {
     eyebrow: "Reef-safe SPF",
     title: "Glow without the burn",
-    subtitle: "skincare made for sun, sea & city days",
+    subtitle: "made for sun, sea & city days",
     cta: { href: "/products", label: "Discover skincare" },
     badge: { icon: Wind, text: "Skin Loved" },
     bg: "from-sun-200 via-sun-300 to-ocean-300",
