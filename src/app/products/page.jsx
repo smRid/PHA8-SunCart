@@ -28,7 +28,7 @@ export default function ProductsPage() {
   const selectedSort = SORT_OPTIONS.find((option) => option.value === sort);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 1500);
+    const timer = setTimeout(() => setLoaded(true), 500);
     return () => clearTimeout(timer);
   }, []);
 
