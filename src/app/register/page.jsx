@@ -24,10 +24,12 @@ export default function RegisterPage() {
     image: "",
     password: "",
   });
+  const [formError, setFormError] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const onChange = (event) => {
+    setFormError("");
     setForm((previous) => ({
       ...previous,
       [event.target.name]: event.target.value,
@@ -38,15 +40,20 @@ export default function RegisterPage() {
     event.preventDefault();
 
     if (!form.name || !form.email || !form.password) {
-      toast.error("Name, email and password are required.");
+      const message = "Name, email and password are required.";
+      setFormError(message);
+      toast.error(message);
       return;
     }
 
     if (form.password.length < 8) {
-      toast.error("Password must be at least 8 characters.");
+      const message = "Password must be at least 8 characters.";
+      setFormError(message);
+      toast.error(message);
       return;
     }
 
+    setFormError("");
     setLoading(true);
 
     try {
@@ -58,15 +65,18 @@ export default function RegisterPage() {
       });
 
       if (error) {
-        toast.error(error.message || "Registration failed.");
+        const message = error.message || "Registration failed.";
+        setFormError(message);
+        toast.error(message);
         return;
       }
 
-      toast.success("Welcome to SunCart.");
-      router.push("/my-profile");
-      router.refresh();
+      toast.success("Account created! Please sign in.");
+      router.push("/login");
     } catch (error) {
-      toast.error(error.message || "Something went wrong.");
+      const message = error.message || "Something went wrong.";
+      setFormError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -84,7 +94,9 @@ export default function RegisterPage() {
         requestSignUp: true,
       });
     } catch (error) {
-      toast.error(error.message || "Google sign-in failed.");
+      const message = error.message || "Google sign-in failed.";
+      setFormError(message);
+      toast.error(message);
     }
   };
 
@@ -170,6 +182,15 @@ export default function RegisterPage() {
                 </button>
               </div>
             </label>
+
+            {formError ? (
+              <p
+                role="alert"
+                className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+              >
+                {formError}
+              </p>
+            ) : null}
 
             <button
               type="submit"
