@@ -2,6 +2,7 @@ import Link from "next/link";
 import HeroSection from "@/components/heroSection/HeroSection";
 import LimitedEdition from "@/components/LimitedEdition";
 import ProductCard from "@/components/ProductCard";
+import SummerTips from "@/components/SummerTips";
 import TopBrands from "@/components/TopBrands";
 import products from "@/data/products.json";
 import { ArrowRight } from "lucide-react";
@@ -44,6 +45,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      <SummerTips />
       <TopBrands />
       <LimitedEdition />
     </>
