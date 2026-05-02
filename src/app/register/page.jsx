@@ -62,8 +62,9 @@ export default function RegisterPage() {
         return;
       }
 
-      toast.success("Welcome to SunCart. Please log in.");
-      router.push("/login");
+      toast.success("Welcome to SunCart.");
+      router.push("/my-profile");
+      router.refresh();
     } catch (error) {
       toast.error(error.message || "Something went wrong.");
     } finally {
