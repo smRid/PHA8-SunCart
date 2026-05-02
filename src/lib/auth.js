@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { dash } from "@better-auth/infra";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { nextCookies } from "better-auth/next-js";
 import { MongoClient } from "mongodb";
@@ -42,5 +43,10 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
   },
-  plugins: [nextCookies()],
+  plugins: [
+    dash({
+      apiKey: process.env.BETTER_AUTH_API_KEY,
+    }),
+    nextCookies(),
+  ],
 });
