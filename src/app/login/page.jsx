@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import { Eye, EyeOff, Loader2, Lock, Mail, Sparkles } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
 
+const HOME_PATH = "/";
+
 export default function LoginPage() {
   return (
     <Suspense
@@ -24,15 +26,19 @@ export default function LoginPage() {
 function LoginInner() {
   const router = useRouter();
   const params = useSearchParams();
-  const redirectTo = params.get("redirect") || "/my-profile";
   const oauthError = params.get("error");
   const oauthDescription = params.get("error_description");
+  const oauthMessage = oauthError
+    ? oauthDescription || oauthError.replaceAll("_", " ")
+    : "";
 
   const [form, setForm] = useState({ email: "", password: "" });
+  const [formError, setFormError] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const onChange = (event) => {
+    setFormError("");
     setForm((previous) => ({
       ...previous,
       [event.target.name]: event.target.value,
@@ -43,29 +49,36 @@ function LoginInner() {
     event.preventDefault();
 
     if (!form.email || !form.password) {
-      toast.error("Please fill in both fields.");
+      const message = "Please fill in both fields.";
+      setFormError(message);
+      toast.error(message);
       return;
     }
 
+    setFormError("");
     setLoading(true);
 
     try {
       const { error } = await signIn.email({
         email: form.email,
         password: form.password,
-        callbackURL: redirectTo,
+        callbackURL: HOME_PATH,
       });
 
       if (error) {
-        toast.error(error.message || "Invalid email or password.");
+        const message = error.message || "Invalid email or password.";
+        setFormError(message);
+        toast.error(message);
         return;
       }
 
       toast.success("Welcome back to SunCart.");
-      router.push(redirectTo);
+      router.push(HOME_PATH);
       router.refresh();
     } catch (error) {
-      toast.error(error.message || "Something went wrong.");
+      const message = error.message || "Something went wrong.";
+      setFormError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -77,13 +90,15 @@ function LoginInner() {
 
       await signIn.social({
         provider: "google",
-        callbackURL: new URL(redirectTo, origin).toString(),
+        callbackURL: new URL(HOME_PATH, origin).toString(),
         errorCallbackURL: `${origin}/login`,
-        newUserCallbackURL: new URL(redirectTo, origin).toString(),
+        newUserCallbackURL: new URL(HOME_PATH, origin).toString(),
         requestSignUp: true,
       });
     } catch (error) {
-      toast.error(error.message || "Google sign-in failed.");
+      const message = error.message || "Google sign-in failed.";
+      setFormError(message);
+      toast.error(message);
     }
   };
 
@@ -92,8 +107,10 @@ function LoginInner() {
       return;
     }
 
-    toast.error(oauthDescription || oauthError.replaceAll("_", " "));
-  }, [oauthDescription, oauthError]);
+    toast.error(oauthMessage);
+  }, [oauthError, oauthMessage]);
+
+  const visibleError = formError || oauthMessage;
 
   return (
     <div className="container-x py-12">
@@ -180,6 +197,15 @@ function LoginInner() {
                 </button>
               </div>
             </label>
+
+            {visibleError ? (
+              <p
+                role="alert"
+                className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+              >
+                {visibleError}
+              </p>
+            ) : null}
 
             <button
               type="submit"
