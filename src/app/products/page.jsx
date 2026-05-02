@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import products from "@/data/products.json";
 import { Check, ChevronDown, Search, SlidersHorizontal } from "lucide-react";
+import ProductsLoading from "./loading";
 
 const CATEGORIES = [
   "All",
@@ -18,12 +19,18 @@ const SORT_OPTIONS = [
 ];
 
 export default function ProductsPage() {
+  const [loaded, setLoaded] = useState(false);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("featured");
   const [sortOpen, setSortOpen] = useState(false);
   const sortMenuRef = useRef(null);
   const selectedSort = SORT_OPTIONS.find((option) => option.value === sort);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoaded(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const closeSortMenu = (event) => {
@@ -68,6 +75,8 @@ export default function ProductsPage() {
 
     return list;
   }, [query, category, sort]);
+
+  if (!loaded) return <ProductsLoading />;
 
   return (
     <div className="container-x py-12">
