@@ -79,7 +79,7 @@ function LoginInner() {
         provider: "google",
         callbackURL: new URL(redirectTo, origin).toString(),
         errorCallbackURL: `${origin}/login`,
-        newUserCallbackURL: `${origin}/my-profile`,
+        newUserCallbackURL: new URL(redirectTo, origin).toString(),
         requestSignUp: true,
       });
     } catch (error) {

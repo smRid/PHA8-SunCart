@@ -1,7 +1,9 @@
+import { headers } from "next/headers";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import ProductDetailsClient from "@/components/ProductDetailsClient";
 import products from "@/data/products.json";
+import { auth } from "@/lib/auth";
 import {
   ArrowLeft,
   BadgeCheck,
@@ -9,12 +11,20 @@ import {
   Sparkles,
 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return products.map((product) => ({ id: String(product.id) }));
 }
 
 export default async function ProductDetailsPage({ params }) {
   const { id } = await params;
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session?.user) {
+    redirect(`/login?redirect=${encodeURIComponent(`/products/${id}`)}`);
+  }
+
   const product = products.find((item) => String(item.id) === String(id));
 
   if (!product) {
