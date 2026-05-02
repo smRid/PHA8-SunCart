@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Eye, EyeOff, Loader2, Lock, Mail, Sparkles } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
@@ -25,6 +25,8 @@ function LoginInner() {
   const router = useRouter();
   const params = useSearchParams();
   const redirectTo = params.get("redirect") || "/my-profile";
+  const oauthError = params.get("error");
+  const oauthDescription = params.get("error_description");
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [show, setShow] = useState(false);
@@ -71,14 +73,27 @@ function LoginInner() {
 
   const onGoogle = async () => {
     try {
+      const origin = window.location.origin;
+
       await signIn.social({
         provider: "google",
-        callbackURL: redirectTo,
+        callbackURL: new URL(redirectTo, origin).toString(),
+        errorCallbackURL: `${origin}/login`,
+        newUserCallbackURL: `${origin}/my-profile`,
+        requestSignUp: true,
       });
     } catch (error) {
       toast.error(error.message || "Google sign-in failed.");
     }
   };
+
+  useEffect(() => {
+    if (!oauthError) {
+      return;
+    }
+
+    toast.error(oauthDescription || oauthError.replaceAll("_", " "));
+  }, [oauthDescription, oauthError]);
 
   return (
     <div className="container-x py-12">
