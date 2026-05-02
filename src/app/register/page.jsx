@@ -74,7 +74,7 @@ export default function RegisterPage() {
 
   const onGoogle = async () => {
     try {
-      await signIn.social({ provider: "google", callbackURL: "/" });
+      await signIn.social({ provider: "google", callbackURL: "/my-profile" });
     } catch (error) {
       toast.error(error.message || "Google sign-in failed.");
     }

@@ -86,13 +86,13 @@ export default async function MyProfilePage() {
           </div>
 
           <dl className="mt-4 space-y-3 text-sm">
-            <Row label="Name" value={u.name || "—"} />
+            <Row label="Name" value={u.name || "-"} />
             <Row label="Email" value={u.email} />
             <Row
               label="Email verified"
-              value={u.emailVerified ? "Verified ✓" : "Not verified"}
+              value={u.emailVerified ? "Verified" : "Not verified"}
             />
-            <Row label="Member ID" value={String(u.id).slice(0, 12) + "…"} />
+            <Row label="Member ID" value={String(u.id).slice(0, 12) + "..."} />
           </dl>
         </div>
 
@@ -105,7 +105,7 @@ export default async function MyProfilePage() {
           <dl className="mt-4 space-y-3 text-sm">
             <Row
               label="Joined"
-              value={joined ? joined.toLocaleDateString() : "—"}
+              value={joined ? joined.toLocaleDateString() : "-"}
             />
             <Row label="Orders placed" value="0" />
             <Row label="Wishlist items" value="0" />
@@ -145,7 +145,7 @@ export default async function MyProfilePage() {
 
           <p className="mt-1 text-sm text-neutral/70">
             Your profile is your sunshine passport. Update your photo and name
-            anytime — your bundles, history and rewards travel with you.
+            anytime - your bundles, history and rewards travel with you.
           </p>
         </div>
       </div>

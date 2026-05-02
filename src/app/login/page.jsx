@@ -24,7 +24,7 @@ export default function LoginPage() {
 function LoginInner() {
   const router = useRouter();
   const params = useSearchParams();
-  const redirectTo = params.get("redirect") || "/";
+  const redirectTo = params.get("redirect") || "/my-profile";
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [show, setShow] = useState(false);
