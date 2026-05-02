@@ -36,11 +36,19 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  account: {
+    updateAccountOnSignIn: true,
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "email-password"],
+    },
+  },
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       redirectURI: process.env.GOOGLE_REDIRECT_URI,
+      overrideUserInfoOnSignIn: true,
     },
   },
   plugins: [
