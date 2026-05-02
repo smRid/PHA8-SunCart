@@ -121,7 +121,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="btn-ghost-sun !px-4 !py-2 !text-sm"
+                className="btn-ghost-sun cursor-pointer !px-4 !py-2 !text-sm"
               >
                 <LogOut className="h-4 w-4" /> Logout
               </button>
@@ -169,7 +169,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={handleSignOut}
-              className="btn-ghost-sun w-full justify-center"
+              className="btn-ghost-sun w-full cursor-pointer justify-center"
             >
               <LogOut className="h-4 w-4" /> Logout
             </button>

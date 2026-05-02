@@ -200,8 +200,8 @@ export default function RegisterPage() {
           </button>
         </section>
 
-        <section className="order-1 hidden overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-ocean-300 via-ocean-400 to-ocean-600 p-10 text-white lg:order-2 lg:flex">
-          <div className="flex min-h-[540px] flex-col justify-between">
+        <section className="order-1 hidden overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-ocean-300 via-ocean-400 to-ocean-600 p-10 text-white lg:order-2 lg:flex lg:items-center">
+          <div className="flex min-h-[540px] w-full flex-col justify-center">
             <div>
               <span className="chip border border-white/30 bg-white/20 backdrop-blur">
                 Members get 10% off
@@ -221,16 +221,20 @@ export default function RegisterPage() {
               </p>
             </div>
 
-            <ul className="space-y-2 text-white/95">
+            <ul className="mt-10 grid max-w-md gap-3 text-sm font-medium text-white">
               {[
                 "Save your favorite items",
                 "Track orders in real time",
                 "Early access to new collections",
-                "Birthday surprises",
               ].map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <Check className="h-4 w-4 shrink-0" />
-                  {item}
+                <li
+                  key={item}
+                  className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/15 px-4 py-3 shadow-sm backdrop-blur"
+                >
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/20">
+                    <Check className="h-4 w-4" />
+                  </span>
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>

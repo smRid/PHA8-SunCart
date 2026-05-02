@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import {
   CalendarDays,
@@ -13,19 +14,14 @@ import {
 
 export const dynamic = "force-dynamic";
 
-const dummyUser = {
-  id: "demo-user-123456789",
-  name: "Demo SunCart User",
-  email: "demo@suncart.shop",
-  image:
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=256&q=80",
-  emailVerified: true,
-  createdAt: new Date("2026-05-02").toISOString(),
-};
-
 export default async function MyProfilePage() {
   const session = await auth.api.getSession({ headers: await headers() });
-  const u = session?.user || dummyUser;
+
+  if (!session?.user) {
+    redirect(`/login?redirect=${encodeURIComponent("/")}`);
+  }
+
+  const u = session.user;
   const joined = u.createdAt ? new Date(u.createdAt) : null;
 
   return (
