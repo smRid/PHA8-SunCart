@@ -74,10 +74,10 @@ export default function Navbar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`relative rounded-full px-4 py-2 text-sm font-semibold transition-all ${
+                  className={`relative rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
                     active
-                      ? "border border-sun-100 bg-white text-sun-800 shadow-sm"
-                      : "text-neutral hover:bg-white/60 hover:text-sun-700"
+                      ? "border-sun-100 bg-white text-sun-800 shadow-sm"
+                      : "border-transparent text-neutral hover:bg-white/60 hover:text-sun-700"
                   }`}
                 >
                   {item.label}
