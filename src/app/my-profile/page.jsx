@@ -1,14 +1,13 @@
 import { headers } from "next/headers";
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import UpdateProfileModal from "@/components/UpdateProfileModal";
 import {
   CalendarDays,
   Crown,
   Mail,
   MapPin,
-  Pencil,
   ShieldCheck,
 } from "lucide-react";
 
@@ -65,12 +64,7 @@ export default async function MyProfilePage() {
             </p>
           </div>
 
-          <Link
-            href="/my-profile/update"
-            className="inline-flex items-center gap-2 self-start rounded-full bg-white px-5 py-3 font-bold text-sun-700 shadow transition hover:scale-[1.02] sm:self-auto"
-          >
-            <Pencil className="h-4 w-4" /> Update Information
-          </Link>
+          <UpdateProfileModal user={u} />
         </div>
       </div>
 
